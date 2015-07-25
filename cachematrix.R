@@ -3,16 +3,17 @@
 
 ## This function creates a special "matrix" object, which is really a 
 ##  list containing a function to
-##   1.  set the value of the matrix
+##   1.  set the value of the matrix and set the inverse to NULL
 ##   2.  get the value of the matrix
 ##   3.  set the value of the inverse of matrix
-##   4.  get the value of the inverse ofthe matrix
+##   4.  get the value of the inverse of the matrix
 
 makeCacheMatrix <- function(x = matrix()) {
     inv <- NULL
     set <- function(y) {
       x <<- y
-      m <<- NULL
+      #if matrix  changes then set inverse to null as it needs to be recalculated
+      inv <<- NULL
     }
     get <- function() x
     setinverse <- function(inverse) inv <<- inverse
@@ -50,9 +51,15 @@ cacheSolve <- function(x, ...) {
 # Paste each line below one by one after removing comments into console 
 #matrixTest1=matrix(c(1,2,1,1), nrow=2,ncol=2,byrow=TRUE)
 #invertibleMatrixObject1 =makeCacheMatrix(matrixTest1)
+#first call below will calcuate matrix and cache it
 #cacheSolve(invertibleMatrixObject1)
+#second call below will get the inverse from the cache as it has allready been calculated
 #cacheSolve(invertibleMatrixObject1)
-#matrixTest2=matrix(c(1,1,2,1), nrow=2,ncol=2,byrow=TRUE)
-#invertibleMatrixObject2 =makeCacheMatrix(matrixTest2)
-#cacheSolve(invertibleMatrixObject2)
-# cacheSolve(invertibleMatrixObject2)
+## Change the matrix 
+#matrixTest2=matrix(c(1,2,2,1), nrow=2,ncol=2,byrow=TRUE)
+#invertibleMatrixObject1$set(matrixTest2)
+#Since the matrix has changed first call to cacheSolve will calcuate inverse of matrix and also cache it.
+#cacheSolve(invertibleMatrixObject1)
+#second call below will get the inverse of matrix from the cache.
+#cacheSolve(invertibleMatrixObject1)
+
